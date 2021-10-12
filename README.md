@@ -16,7 +16,6 @@ Linux:
 ```
 
 Windows:
-Linux:
 ```
 > $ python3 -m venv venv # Optional but recommended creation of virtual environment for the project
 > $ .\venv\Scripts\activate.bat # Activation of the created virtual environment
