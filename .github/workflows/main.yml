@@ -1,0 +1,26 @@
+name: Run Python Script
+on:
+  # Schedule daily updates
+  schedule: [{cron: "0 0 * * *"}]
+  # Lines below let you run workflow manually and on each commit
+  workflow_dispatch:
+  push: {branches: ["master", "main"]}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v2 # checkout the repository content to github runner.
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8 #install the python needed
+      - name: execute py script # run the main.py script
+        run: |
+          python main.py
+        env:
+          TOGGL_API_TOKEN: ${{ secrets.TOGGL_API_TOKEN }}
+          JIRA_SERVER: ${{ secrets.JIRA_SERVER }}
+          JIRA_MAIL: ${{ secrets.JIRA_MAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
