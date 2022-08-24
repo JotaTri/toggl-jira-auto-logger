@@ -52,12 +52,14 @@ logged_entries = 0
 for entry in response:
     if 'tags' not in entry or 'logged' not in entry['tags']:
         try:
+            entry_description = entry["description"]
             logger.info(
-                f'Adding worklog on issue {entry["description"]}' +
+                f'Adding worklog on issue {entry_description}' +
                 f' of {float(entry["duration"])/3600:.2f}h on {entry["start"]}'
             )
+            logger.info(f'Getting issue id from description: ' + entry_description[slice(7)]) ## TODO: get info id (FUT-XXX) on substring
             jira.add_worklog(
-                entry['description'],
+                entry_description.split(" ", 1)[0],
                 timeSpentSeconds=str(entry['duration']),
                 started=datetime.strptime(entry['start'], toggl_datetime_format)
             )
