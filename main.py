@@ -7,11 +7,11 @@ from toggl.TogglPy import Toggl
 
 
 TIME_DELTA = 7
-TOGGL_API_TOKEN = ${{ secrets.TOGGL_API_TOKEN }}
+TOGGL_API_TOKEN = os.environ['TOGGL_API_TOKEN']
 
-JIRA_SERVER = ${{ secrets.JIRA_SERVER }}
-JIRA_MAIL = ${{ secrets.JIRA_MAIL }}
-JIRA_API_TOKEN = ${{ secrets.JIRA_API_TOKEN }}
+JIRA_SERVER = os.environ['JIRA_SERVER']
+JIRA_MAIL = os.environ['JIRA_MAIL']
+JIRA_API_TOKEN = os.environ['JIRA_API_TOKEN']
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
