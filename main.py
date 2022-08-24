@@ -1,10 +1,10 @@
 import logging
 import urllib
 from datetime import datetime, timedelta
+import os
 
 from jira import JIRA
 from toggl.TogglPy import Toggl
-
 
 TIME_DELTA = 7
 TOGGL_API_TOKEN = os.environ['TOGGL_API_TOKEN']
