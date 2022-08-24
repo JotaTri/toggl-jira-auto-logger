@@ -1,17 +1,17 @@
 import logging
 import urllib
 from datetime import datetime, timedelta
+import os
 
 from jira import JIRA
 from toggl.TogglPy import Toggl
 
-
 TIME_DELTA = 7
-TOGGL_API_TOKEN = '<TOKEN HERE>'
+TOGGL_API_TOKEN = os.environ['TOGGL_API_TOKEN']
 
-JIRA_SERVER = '<SERVER URL HERE>'
-JIRA_MAIL = '<EMAIL HERE>'
-JIRA_API_TOKEN = '<TOKEN HERE>'
+JIRA_SERVER = os.environ['JIRA_SERVER']
+JIRA_MAIL = os.environ['JIRA_MAIL']
+JIRA_API_TOKEN = os.environ['JIRA_API_TOKEN']
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -52,12 +52,14 @@ logged_entries = 0
 for entry in response:
     if 'tags' not in entry or 'logged' not in entry['tags']:
         try:
+            entry_description = entry["description"]
             logger.info(
-                f'Adding worklog on issue {entry["description"]}' +
+                f'Adding worklog on issue {entry_description}' +
                 f' of {float(entry["duration"])/3600:.2f}h on {entry["start"]}'
             )
+            logger.info(f'Getting issue id from description: ' + entry_description[slice(7)]) ## TODO: get info id (FUT-XXX) on substring
             jira.add_worklog(
-                entry['description'],
+                entry_description.split(" ", 1)[0],
                 timeSpentSeconds=str(entry['duration']),
                 started=datetime.strptime(entry['start'], toggl_datetime_format)
             )
